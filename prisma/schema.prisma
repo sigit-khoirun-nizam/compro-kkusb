@@ -1,0 +1,246 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  APPLICANT
+}
+
+model SiteSetting {
+  id               String   @id @default(cuid())
+  siteName         String   @default("KKUSB")
+  siteDescription  String?  @db.Text
+  logo             String?
+  favicon          String?
+  phoneNumber      String?
+  email            String?
+  whatsapp         String?
+  address          String?  @db.Text
+  googleMapsUrl    String?  @db.Text
+  facebookUrl      String?
+  instagramUrl     String?
+  youtubeUrl       String?
+  footerText       String?  @db.Text
+  seoTitle         String?
+  seoDescription   String?  @db.Text
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model UnitUsaha {
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  shortDescription String?  @db.Text
+  description      String?  @db.Text
+  image            String?
+  icon             String?
+  status           Status   @default(PUBLISHED)
+  order            Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model News {
+  id            String        @id @default(cuid())
+  title         String
+  slug          String        @unique
+  excerpt       String?       @db.Text
+  content       String?       @db.Text
+  featuredImage String?
+  author        String?
+  categoryId    String?
+  category      NewsCategory? @relation(fields: [categoryId], references: [id])
+  status        Status        @default(PUBLISHED)
+  publishedAt   DateTime?     @default(now())
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model NewsCategory {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  news      News[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Client {
+  id          String   @id @default(cuid())
+  name        String
+  logo        String?
+  description String?  @db.Text
+  website     String?
+  order       Int      @default(0)
+  status      Status   @default(PUBLISHED)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Gallery {
+  id          String           @id @default(cuid())
+  title       String
+  image       String
+  description String?          @db.Text
+  categoryId  String?
+  category    GalleryCategory? @relation(fields: [categoryId], references: [id])
+  date        DateTime?        @default(now())
+  status      Status           @default(PUBLISHED)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model GalleryCategory {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  galleries Gallery[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Document {
+  id          String   @id @default(cuid())
+  title       String
+  description String?  @db.Text
+  fileUrl     String
+  category    String?
+  status      Status   @default(PUBLISHED)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactMessage {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phoneNumber String?
+  subject     String?
+  message     String   @db.Text
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model OrganizationMember {
+  id          String   @id @default(cuid())
+  name        String
+  position    String
+  image       String?
+  description String?  @db.Text
+  order       Int      @default(0)
+  status      Status   @default(PUBLISHED)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum Status {
+  DRAFT
+  PUBLISHED
+}
+
+// ==========================================
+// MODUL KARIR & TES AKADEMIK
+// ==========================================
+
+model JobPosting {
+  id              String      @id @default(cuid())
+  title           String
+  slug            String      @unique
+  department      String?
+  location        String?
+  type            String?     // Full-time, Part-time, Contract
+  description     String      @db.Text
+  requirements    String      @db.Text
+  status          Status      @default(PUBLISHED)
+  deadline        DateTime?
+  applicants      Applicant[]
+  tests           AcademicTest[] // Tes yang di-assign untuk posisi ini
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Applicant {
+  id              String      @id @default(cuid())
+  jobId           String
+  job             JobPosting  @relation(fields: [jobId], references: [id])
+  name            String
+  email           String      
+  phone           String?
+  cvUrl           String?
+  status          AppStatus   @default(PENDING) // PENDING, REVIEWING, TEST_SENT, INTERVIEW, REJECTED, ACCEPTED
+  testScore       Float?      // Nilai tes akademik otomatis
+  testAnswers     TestAnswer[]
+  testStartedAt   DateTime?
+  testCompletedAt DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+enum AppStatus {
+  PENDING
+  REVIEWING
+  TEST_SENT
+  TEST_COMPLETED
+  INTERVIEW
+  REJECTED
+  ACCEPTED
+}
+
+model AcademicTest {
+  id              String      @id @default(cuid())
+  title           String
+  description     String?     @db.Text
+  durationMinutes Int         @default(60)
+  jobId           String?
+  job             JobPosting? @relation(fields: [jobId], references: [id])
+  questions       TestQuestion[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model TestQuestion {
+  id              String      @id @default(cuid())
+  testId          String
+  test            AcademicTest @relation(fields: [testId], references: [id], onDelete: Cascade)
+  question        String      @db.Text
+  optionA         String
+  optionB         String
+  optionC         String
+  optionD         String
+  correctOption   String      // A, B, C, atau D
+  order           Int         @default(0)
+  answers         TestAnswer[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model TestAnswer {
+  id              String       @id @default(cuid())
+  applicantId     String
+  applicant       Applicant    @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  questionId      String
+  question        TestQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  selectedOption  String       // A, B, C, atau D
+  isCorrect       Boolean      @default(false)
+  createdAt       DateTime     @default(now())
+  
+  @@unique([applicantId, questionId])
+}

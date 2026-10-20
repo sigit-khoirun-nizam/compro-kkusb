@@ -1,0 +1,1042 @@
+Buat sebuah website Company Profile modern untuk Koperasi Jasa Karyawan Usaha Sejahtera Bersama (KKUSB) dari NOL sampai siap dijalankan.
+
+PENTING:
+- Gunakan Next.js versi terbaru dengan App Router.
+- Gunakan TypeScript.
+- Gunakan Tailwind CSS.
+- Gunakan shadcn/ui sebagai komponen UI utama.
+- Gunakan Lucide React untuk icon.
+- Gunakan PostgreSQL sebagai database.
+- Gunakan Prisma ORM.
+- Buat authentication untuk admin.
+- Buat Admin Dashboard/CMS sehingga seluruh konten company profile dapat dikelola tanpa mengubah source code.
+- Website harus responsive untuk desktop, tablet, dan mobile.
+- Jangan membuat sekadar mockup/static HTML. Semua fitur utama harus benar-benar terhubung dan dapat digunakan.
+- Struktur project harus rapi, scalable, dan mudah dikembangkan.
+- Gunakan clean architecture dan reusable components.
+- Gunakan Bahasa Indonesia sebagai bahasa utama.
+- Jangan menggunakan WordPress.
+- Jangan menggunakan backend terpisah jika tidak diperlukan; gunakan Next.js sebagai full-stack application.
+
+REFERENSI DESAIN:
+Gunakan screenshot website KKUSB yang saya berikan sebagai referensi visual dan informasi struktur website, tetapi JANGAN menyalin desain lama secara mentah.
+
+Website baru harus terlihat:
+- modern
+- profesional
+- corporate
+- terpercaya
+- bersih
+- elegan
+- responsive
+- cocok untuk website resmi koperasi/perusahaan
+- memiliki visual yang lebih modern daripada website lama
+
+Gunakan identitas visual KKUSB:
+- Dominan hijau
+- Putih
+- Sedikit aksen kuning
+- Gunakan logo KKUSB jika tersedia
+- Gunakan typography modern dan mudah dibaca
+- Hindari desain yang terlalu ramai
+- Gunakan whitespace yang cukup
+- Gunakan card dengan border/radius yang elegan
+- Gunakan subtle animation, jangan berlebihan
+
+==================================================
+1. STRUKTUR WEBSITE PUBLIC
+==================================================
+
+Buat halaman public berikut:
+
+/
+    Homepage
+
+/tentang
+    Tentang KKUSB
+
+/unit-usaha
+    Daftar unit usaha
+
+/unit-usaha/[slug]
+    Detail unit usaha
+
+/berita
+    Daftar berita
+
+/berita/[slug]
+    Detail berita
+
+/klien
+    Daftar klien/mitra
+
+/galeri
+    Galeri foto
+
+/dokumen
+    Daftar dokumen publik
+
+/kontak
+    Halaman kontak
+
+==================================================
+2. HOMEPAGE
+==================================================
+
+Homepage harus memiliki section:
+
+1. Header/Navbar
+   - Logo KKUSB
+   - Beranda
+   - Tentang
+   - Unit Usaha
+   - Berita
+   - Klien
+   - Galeri
+   - Kontak
+   - Tombol/search icon
+   - Mobile hamburger menu
+
+2. Hero Section
+   - Full width
+   - Background image
+   - Overlay yang elegan
+   - Headline:
+     "Koperasi Jasa Karyawan Usaha Sejahtera Bersama"
+   - Subheadline yang menjelaskan KKUSB
+   - CTA:
+     "Tentang Kami"
+     "Unit Usaha"
+
+3. Tentang Singkat
+   - Deskripsi koperasi
+   - Visi
+   - Misi
+   - Tombol "Selengkapnya"
+
+4. Statistik
+   Contoh:
+   - Tahun Berdiri
+   - Anggota
+   - Unit Usaha
+   - Mitra
+   Nilainya harus berasal dari database/admin.
+
+5. Unit Usaha
+   - Tampilkan beberapa unit usaha dalam card
+   - Image
+   - Nama
+   - Deskripsi singkat
+   - Button detail
+
+6. Mengapa Memilih KKUSB
+   - Profesional
+   - Terpercaya
+   - Berpengalaman
+   - Berorientasi pada kesejahteraan anggota
+
+7. Berita Terbaru
+   - Ambil data dari database
+   - Featured image
+   - Judul
+   - Tanggal
+   - Excerpt
+   - Button baca selengkapnya
+
+8. Klien/Mitra
+   - Logo client/partner
+   - Slider/grid
+
+9. Galeri
+   - Gallery grid
+   - Lightbox ketika gambar diklik
+
+10. CTA
+   - Section ajakan untuk menghubungi KKUSB
+
+11. Footer
+   - Logo
+   - Deskripsi
+   - Navigasi
+   - Kontak
+   - Alamat
+   - Email
+   - Nomor telepon
+   - Social media
+   - Copyright
+   - Tahun otomatis
+
+==================================================
+3. TENTANG
+==================================================
+
+Halaman /tentang:
+
+- Hero/banner
+- Profil koperasi
+- Sejarah
+- Visi
+- Misi
+- Nilai perusahaan/koperasi
+- Struktur organisasi
+- Pengurus
+- Manajemen
+- Statistik koperasi
+
+Semua konten yang memungkinkan harus dapat dikelola dari Admin Dashboard.
+
+==================================================
+4. UNIT USAHA
+==================================================
+
+Buat CRUD unit usaha.
+
+Data:
+
+- id
+- name
+- slug
+- shortDescription
+- description
+- image
+- icon
+- status
+- order
+- createdAt
+- updatedAt
+
+Public:
+
+/unit-usaha
+/unit-usaha/[slug]
+
+Admin:
+
+/admin/unit-usaha
+/admin/unit-usaha/create
+/admin/unit-usaha/[id]/edit
+
+Fitur:
+- tambah
+- edit
+- hapus
+- publish/unpublish
+- upload gambar
+- sorting/order
+
+==================================================
+5. BERITA
+==================================================
+
+Buat CMS berita lengkap.
+
+Data:
+
+- id
+- title
+- slug
+- excerpt
+- content
+- featuredImage
+- author
+- category
+- status
+- publishedAt
+- createdAt
+- updatedAt
+
+Status:
+- Draft
+- Published
+
+Fitur admin:
+
+- daftar berita
+- search
+- filter
+- pagination
+- tambah berita
+- edit
+- hapus
+- publish
+- unpublish
+- upload featured image
+- rich text editor
+- kategori
+- slug otomatis
+- preview berita
+
+Public:
+
+/berita
+/berita/[slug]
+
+SEO:
+- dynamic metadata
+- title
+- description
+- Open Graph
+- canonical URL
+
+==================================================
+6. KLIEN / MITRA
+==================================================
+
+Buat CRUD client/partner.
+
+Data:
+
+- name
+- logo
+- description
+- website
+- order
+- status
+
+Admin:
+- tambah
+- edit
+- hapus
+- upload logo
+- sorting
+
+Public:
+- grid atau carousel
+
+==================================================
+7. GALERI
+==================================================
+
+Buat gallery management.
+
+Data:
+
+- title
+- image
+- description
+- category
+- date
+- status
+
+Admin:
+- upload
+- edit
+- delete
+- category
+- publish/unpublish
+
+Public:
+- masonry/grid gallery
+- filter kategori
+- lightbox
+
+==================================================
+8. DOKUMEN
+==================================================
+
+Buat document management.
+
+Data:
+
+- title
+- description
+- file
+- category
+- status
+- createdAt
+
+Admin:
+- upload PDF/document
+- edit
+- delete
+- publish/unpublish
+
+Public:
+- daftar dokumen
+- download button
+
+==================================================
+9. KONTAK
+==================================================
+
+Buat halaman kontak:
+
+- alamat
+- nomor telepon
+- email
+- WhatsApp
+- jam operasional
+- Google Maps
+- social media
+
+Buat contact form:
+
+- nama
+- email
+- nomor telepon
+- subjek
+- pesan
+
+Pesan dari contact form harus masuk ke database dan dapat dilihat admin.
+
+==================================================
+10. ADMIN DASHBOARD
+==================================================
+
+Buat dashboard:
+
+/admin/login
+
+/admin
+
+/admin/tentang
+/admin/unit-usaha
+/admin/berita
+/admin/klien
+/admin/galeri
+/admin/dokumen
+/admin/kontak
+/admin/pesan
+/admin/settings
+
+Admin Dashboard harus menggunakan layout berbeda dari website public.
+
+Sidebar:
+
+Dashboard
+Tentang
+Unit Usaha
+Berita
+Klien / Mitra
+Galeri
+Dokumen
+Pesan
+Pengaturan
+Logout
+
+Dashboard utama menampilkan:
+
+- Total berita
+- Berita published
+- Total unit usaha
+- Total klien
+- Total galeri
+- Pesan masuk
+- Recent news
+- Recent contact messages
+
+Gunakan shadcn/ui:
+- Card
+- Table
+- Dialog
+- Dropdown
+- Button
+- Input
+- Textarea
+- Select
+- Tabs
+- Badge
+- Sheet
+- Alert Dialog
+- Toast/Sonner
+- Pagination
+- Breadcrumb
+- Sidebar
+
+==================================================
+11. AUTHENTICATION
+==================================================
+
+Buat admin authentication yang aman.
+
+Fitur:
+
+- Login
+- Logout
+- Session
+- Protected admin routes
+- Password hashing
+- Jangan menyimpan password plaintext
+
+Admin fields:
+
+- id
+- name
+- email
+- passwordHash
+- role
+- createdAt
+- updatedAt
+
+Role minimal:
+
+ADMIN
+
+Pastikan user yang belum login tidak dapat mengakses /admin/*.
+
+Jika menggunakan Auth.js/NextAuth atau library authentication lain yang sesuai, implementasikan dengan benar.
+
+==================================================
+12. DATABASE
+==================================================
+
+Gunakan:
+
+PostgreSQL
++
+Prisma ORM
+
+Buat Prisma schema untuk minimal:
+
+User
+SiteSetting
+Page
+UnitUsaha
+News
+NewsCategory
+Client
+Gallery
+GalleryCategory
+Document
+ContactMessage
+OrganizationMember
+Media
+
+Relasi database harus dibuat dengan benar.
+
+Buat:
+- prisma/schema.prisma
+- seed database
+- migration instructions
+
+Seed minimal:
+- 1 admin user
+- beberapa unit usaha dummy
+- beberapa berita dummy
+- beberapa client dummy
+- beberapa gallery dummy
+- site settings
+
+Jangan menggunakan data dummy yang terlihat seperti data resmi KKUSB. Tandai data dummy dengan jelas.
+
+==================================================
+13. MEDIA / IMAGE UPLOAD
+==================================================
+
+Buat sistem upload media yang rapi.
+
+Untuk development lokal gunakan local storage/public uploads jika memungkinkan.
+
+Struktur:
+
+/public/uploads
+
+Pisahkan berdasarkan kategori:
+
+/uploads/news
+/uploads/gallery
+/uploads/clients
+/uploads/documents
+/uploads/general
+
+Buat reusable upload component.
+
+Validasi:
+- file type
+- file size
+- image dimensions jika diperlukan
+
+Jangan membuat upload yang tidak aman.
+
+Arsitektur media harus mudah diganti ke S3/Cloudflare R2/storage lain di masa depan.
+
+==================================================
+14. SITE SETTINGS
+==================================================
+
+Buat halaman:
+
+/admin/settings
+
+Pengaturan:
+
+- Nama website
+- Logo
+- Favicon
+- Deskripsi
+- Nomor telepon
+- Email
+- WhatsApp
+- Alamat
+- Google Maps URL
+- Facebook
+- Instagram
+- YouTube
+- Footer text
+- SEO title
+- SEO description
+
+Data diambil dari database.
+
+Dengan demikian admin tidak perlu mengubah source code untuk mengubah informasi perusahaan.
+
+==================================================
+15. SEO
+==================================================
+
+Implementasikan SEO dengan serius.
+
+Gunakan Next.js Metadata API.
+
+Buat:
+
+- metadata setiap halaman
+- dynamic metadata untuk berita
+- Open Graph
+- Twitter card
+- canonical URL
+- sitemap.xml
+- robots.txt
+- semantic HTML
+- heading hierarchy
+- alt text gambar
+
+Buat structured data/schema.org jika relevan:
+
+Organization
+WebSite
+Article
+BreadcrumbList
+
+==================================================
+16. PERFORMANCE
+==================================================
+
+Optimalkan:
+
+- next/image
+- lazy loading
+- server components jika memungkinkan
+- caching/revalidation
+- code splitting
+- minimize client components
+- responsive images
+
+Target:
+- Lighthouse Performance tinggi
+- SEO tinggi
+- Accessibility tinggi
+
+Jangan menggunakan library besar jika tidak diperlukan.
+
+==================================================
+17. RESPONSIVE
+==================================================
+
+Website harus sempurna di:
+
+- 1920px
+- 1440px
+- 1280px
+- 1024px
+- 768px
+- 480px
+- 375px
+
+Mobile navigation harus menggunakan Sheet dari shadcn/ui.
+
+Admin dashboard juga harus responsive.
+
+==================================================
+18. UI/UX
+==================================================
+
+Gunakan desain modern corporate.
+
+Color system:
+
+Primary:
+Hijau KKUSB
+
+Secondary:
+Kuning sebagai accent
+
+Neutral:
+White
+Gray
+Dark
+
+Jangan menggunakan terlalu banyak warna.
+
+Gunakan:
+- rounded-xl
+- subtle shadow
+- border
+- hover transition
+- smooth animation
+
+Gunakan Framer Motion hanya jika benar-benar diperlukan.
+
+Animasi:
+- fade
+- slide
+- hover
+- page section reveal
+
+Jangan membuat animasi berlebihan.
+
+==================================================
+19. COMPONENT ARCHITECTURE
+==================================================
+
+Buat reusable components:
+
+components/
+  ui/
+  layout/
+  navbar.tsx
+  footer.tsx
+  hero.tsx
+  section-heading.tsx
+  news-card.tsx
+  unit-card.tsx
+  client-logo.tsx
+  gallery-card.tsx
+  stats-section.tsx
+  contact-form.tsx
+  image-upload.tsx
+
+Pisahkan public components dan admin components jika diperlukan.
+
+==================================================
+20. FOLDER STRUCTURE
+==================================================
+
+Gunakan struktur yang rapi seperti:
+
+app/
+  (public)/
+    page.tsx
+    tentang/
+    unit-usaha/
+    berita/
+    klien/
+    galeri/
+    dokumen/
+    kontak/
+
+  admin/
+    login/
+    page.tsx
+    tentang/
+    unit-usaha/
+    berita/
+    klien/
+    galeri/
+    dokumen/
+    pesan/
+    settings/
+
+  api/
+    auth/
+    contact/
+    upload/
+    ...
+
+components/
+lib/
+  prisma.ts
+  auth.ts
+  utils.ts
+  validations/
+  services/
+
+prisma/
+  schema.prisma
+  seed.ts
+
+public/
+  uploads/
+
+==================================================
+21. VALIDATION
+==================================================
+
+Gunakan Zod untuk validation.
+
+Semua form harus memiliki:
+- validation
+- error message
+- loading state
+- success state
+- disabled state
+
+Jangan hanya melakukan validation di frontend.
+
+Server-side validation juga wajib.
+
+==================================================
+22. ERROR HANDLING
+==================================================
+
+Buat:
+
+- loading state
+- empty state
+- error state
+- not found page
+- unauthorized page
+- global error handling
+
+Contoh:
+
+Berita kosong:
+"Belum ada berita."
+
+Data gagal dimuat:
+"Gagal memuat data. Silakan coba lagi."
+
+==================================================
+23. SECURITY
+==================================================
+
+Perhatikan:
+
+- password hashing
+- authentication
+- authorization
+- protected routes
+- input validation
+- SQL injection prevention
+- XSS prevention
+- CSRF protection jika relevan
+- upload validation
+- file upload security
+- jangan expose secret
+- environment variables
+
+Gunakan:
+
+.env
+
+Contoh:
+
+DATABASE_URL=
+AUTH_SECRET=
+NEXT_PUBLIC_SITE_URL=
+
+Jangan pernah hardcode credential.
+
+==================================================
+24. ADMIN EXPERIENCE
+==================================================
+
+Admin harus mudah digunakan oleh pegawai non-programmer.
+
+Contoh flow:
+
+Admin login
+↓
+Dashboard
+↓
+Berita
+↓
+Tambah Berita
+↓
+Upload gambar
+↓
+Tulis konten
+↓
+Preview
+↓
+Publish
+
+Gunakan bahasa Indonesia di dashboard.
+
+Contoh button:
+- Tambah Berita
+- Simpan Draft
+- Publikasikan
+- Edit
+- Hapus
+- Batal
+- Kembali
+- Cari
+- Filter
+
+==================================================
+25. CONTENT EDITOR
+==================================================
+
+Untuk berita gunakan rich text editor yang ringan dan compatible dengan Next.js.
+
+Editor minimal mendukung:
+
+- heading
+- bold
+- italic
+- underline
+- bullet list
+- numbered list
+- link
+- image jika memungkinkan
+- quote
+- alignment
+
+Konten disimpan dengan aman dan dapat dirender di public page.
+
+==================================================
+26. SEARCH
+==================================================
+
+Buat search berita.
+
+Admin:
+- search title
+- filter category
+- filter status
+
+Public:
+- search berita
+- pagination
+
+==================================================
+27. ACCESSIBILITY
+==================================================
+
+Perhatikan:
+
+- semantic HTML
+- aria-label
+- keyboard navigation
+- focus state
+- contrast
+- alt text
+- button yang jelas
+- form label
+
+==================================================
+28. SEED DATA
+==================================================
+
+Buat seed yang realistis tetapi gunakan dummy data.
+
+Contoh admin:
+
+email:
+admin@example.com
+
+password:
+Admin123!
+
+Tambahkan komentar bahwa password tersebut HARUS diganti sebelum production.
+
+==================================================
+29. README
+==================================================
+
+Buat README.md yang menjelaskan:
+
+1. Requirements
+2. Install dependencies
+3. Setup environment
+4. Setup PostgreSQL
+5. Prisma migration
+6. Seed database
+7. Menjalankan development
+8. Build production
+9. Start production
+10. Deployment
+11. Struktur folder
+12. Cara membuat admin
+13. Cara backup database
+14. Cara mengganti storage image
+
+==================================================
+30. DEVELOPMENT COMMAND
+==================================================
+
+Pastikan project dapat dijalankan dengan:
+
+npm install
+
+npx prisma generate
+
+npx prisma migrate dev
+
+npm run dev
+
+Dan production:
+
+npm run build
+
+npm start
+
+Tambahkan script package.json yang diperlukan.
+
+==================================================
+31. FINAL REQUIREMENT
+==================================================
+
+Jangan berhenti setelah membuat UI.
+
+Implementasikan seluruh aplikasi sampai dapat dijalankan.
+
+Urutan kerja:
+
+1. Buat project Next.js
+2. Install dependencies
+3. Setup Tailwind
+4. Setup shadcn/ui
+5. Setup Prisma
+6. Setup PostgreSQL
+7. Buat database schema
+8. Buat seed
+9. Buat authentication
+10. Buat admin dashboard
+11. Buat CRUD
+12. Buat public website
+13. Hubungkan public website ke database
+14. Implementasikan upload
+15. Implementasikan SEO
+16. Implementasikan responsive design
+17. Test seluruh route
+18. Perbaiki TypeScript error
+19. Perbaiki lint error
+20. Jalankan production build
+
+Sebelum selesai, lakukan pemeriksaan:
+
+- npm run lint
+- npm run build
+
+Pastikan tidak ada error TypeScript/build.
+
+Jangan meninggalkan TODO penting.
+
+Jika ada keputusan teknis yang belum ditentukan, pilih solusi yang paling sederhana, stabil, maintainable, dan production-ready.
+
+HASIL AKHIR:
+Saya ingin mendapatkan satu project Next.js full-stack yang berisi:
+
+PUBLIC COMPANY PROFILE
++
+ADMIN DASHBOARD/CMS
++
+AUTHENTICATION
++
+MYSQL
++
+PRISMA
++
+CRUD
++
+MEDIA UPLOAD
++
+SEO
++
+RESPONSIVE UI
++
+PRODUCTION-READY STRUCTURE
+
+Gunakan screenshot KKUSB yang saya lampirkan sebagai referensi visual, tetapi redesign menjadi website corporate modern yang jauh lebih bersih dan profesional.
