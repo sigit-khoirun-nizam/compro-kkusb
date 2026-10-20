@@ -18,34 +18,41 @@ export default async function PortalDashboardPage() {
 
   const email = session.user.email
 
-  const rawApplications = await prisma.applicant.findMany({
-    where: { email },
-    include: {
-      job: {
-        include: {
-          tests: {
-            select: {
-              id: true,
-              title: true,
-              durationMinutes: true,
-              _count: {
-                select: { questions: true }
+  let rawApplications: any[] = []
+  let siteSettings: any = null
+
+  try {
+    rawApplications = await prisma.applicant.findMany({
+      where: { email },
+      include: {
+        job: {
+          include: {
+            tests: {
+              select: {
+                id: true,
+                title: true,
+                durationMinutes: true,
+                _count: {
+                  select: { questions: true }
+                }
               }
             }
           }
         }
-      }
-    },
-    orderBy: { createdAt: 'desc' }
-  })
+      },
+      orderBy: { createdAt: 'desc' }
+    })
 
-  const siteSettings = await prisma.siteSetting.findFirst({
-    select: {
-      phoneNumber: true,
-      email: true,
-      whatsapp: true
-    }
-  })
+    siteSettings = await prisma.siteSetting.findFirst({
+      select: {
+        phoneNumber: true,
+        email: true,
+        whatsapp: true
+      }
+    })
+  } catch (error) {
+    console.warn('[PortalDashboardPage] Gagal membaca data lamaran dari database:', error)
+  }
 
   // Format applications into client-safe serializable structure
   const applications: ApplicantApplication[] = rawApplications.map(app => ({

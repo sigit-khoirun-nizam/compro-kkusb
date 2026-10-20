@@ -19,37 +19,44 @@ export default async function PortalLowonganPage() {
 
   const email = session.user.email
 
-  // 1. Fetch user's existing applications
-  const userApplications = await prisma.applicant.findMany({
-    where: { email },
-    select: {
-      id: true,
-      jobId: true,
-      status: true,
-      testScore: true,
-      createdAt: true,
-      job: {
-        select: {
-          id: true,
-          slug: true
-        }
-      }
-    }
-  })
+  let userApplications: any[] = []
+  let dbJobs: any[] = []
 
-  // 2. Fetch published jobs ONLY from database (data asli yang terdaftar di sistem)
-  const dbJobs = await prisma.jobPosting.findMany({
-    where: { status: 'PUBLISHED' },
-    orderBy: { createdAt: 'desc' },
-    include: {
-      tests: {
-        select: {
-          id: true,
-          title: true
+  try {
+    // 1. Fetch user's existing applications
+    userApplications = await prisma.applicant.findMany({
+      where: { email },
+      select: {
+        id: true,
+        jobId: true,
+        status: true,
+        testScore: true,
+        createdAt: true,
+        job: {
+          select: {
+            id: true,
+            slug: true
+          }
         }
       }
-    }
-  })
+    })
+
+    // 2. Fetch published jobs ONLY from database (data asli yang terdaftar di sistem)
+    dbJobs = await prisma.jobPosting.findMany({
+      where: { status: 'PUBLISHED' },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        tests: {
+          select: {
+            id: true,
+            title: true
+          }
+        }
+      }
+    })
+  } catch (error) {
+    console.warn('[PortalLowonganPage] Gagal membaca data dari database:', error)
+  }
 
   // Format data HANYA dari database tanpa dummy fallback
   const jobs: PortalJobItem[] = dbJobs.map(dbJ => {

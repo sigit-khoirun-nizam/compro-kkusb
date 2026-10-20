@@ -22,24 +22,46 @@ export const metadata: Metadata = {
   description: 'Informasi lowongan kerja resmi, budaya kerja, dan proses rekrutmen di Koperasi Jasa Karyawan Usaha Sejahtera Bersama.',
 }
 
-export default async function KarirPage() {
-  const dbJobs = await prisma.jobPosting.findMany({
-    where: { status: 'PUBLISHED' },
-    orderBy: { createdAt: 'desc' }
-  })
+export const dynamic = 'force-dynamic'
 
-  const jobs = dbJobs.map(dbJ => ({
-    id: dbJ.id,
-    title: dbJ.title,
-    slug: dbJ.slug,
-    department: dbJ.department || 'Divisi IT & Korporasi',
-    location: dbJ.location || 'Gresik / Jawa Timur',
-    type: dbJ.type || 'Penuh Waktu',
-    postedDate: new Date(dbJ.createdAt).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' }),
-    deadline: dbJ.deadline ? new Date(dbJ.deadline).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Terbuka',
-    description: dbJ.description,
-    requirements: dbJ.requirements ? dbJ.requirements.split('\n').map(r => r.replace(/^-\s*/, '').trim()).filter(Boolean) : []
-  }))
+export default async function KarirPage() {
+  let dbJobs: any[] = []
+
+  try {
+    dbJobs = await prisma.jobPosting.findMany({
+      where: { status: 'PUBLISHED' },
+      orderBy: { createdAt: 'desc' }
+    })
+  } catch (error) {
+    console.warn('[KarirPage] Tidak dapat mengambil data JobPosting dari database, menggunakan data default:', error)
+  }
+
+  // Gunakan data dari database jika tersedia, atau fallback ke JOB_VACANCIES
+  const jobs = dbJobs.length > 0 
+    ? dbJobs.map(dbJ => ({
+        id: dbJ.id,
+        title: dbJ.title,
+        slug: dbJ.slug,
+        department: dbJ.department || 'Divisi IT & Korporasi',
+        location: dbJ.location || 'Gresik / Jawa Timur',
+        type: dbJ.type || 'Penuh Waktu',
+        postedDate: new Date(dbJ.createdAt).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' }),
+        deadline: dbJ.deadline ? new Date(dbJ.deadline).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Terbuka',
+        description: dbJ.description,
+        requirements: dbJ.requirements ? dbJ.requirements.split('\n').map((r: string) => r.replace(/^-\s*/, '').trim()).filter(Boolean) : []
+      }))
+    : JOB_VACANCIES.map(j => ({
+        id: j.id,
+        title: j.title,
+        slug: j.slug,
+        department: j.department || 'Divisi IT & Korporasi',
+        location: j.location || 'Gresik / Jawa Timur',
+        type: j.type || 'Penuh Waktu',
+        postedDate: j.postedDate || 'Terbaru',
+        deadline: j.deadline || 'Terbuka',
+        description: j.description || '',
+        requirements: j.requirements || []
+      }))
 
   return (
     <div className="flex flex-col min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 selection:bg-[#079B49]/20 selection:text-[#075C35]">
