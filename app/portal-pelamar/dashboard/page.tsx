@@ -55,7 +55,7 @@ export default async function PortalDashboardPage() {
   }
 
   // Format applications into client-safe serializable structure
-  const applications: ApplicantApplication[] = rawApplications.map(app => ({
+  const applications: ApplicantApplication[] = rawApplications.map((app: any) => ({
     id: app.id,
     name: app.name,
     email: app.email,
@@ -77,7 +77,7 @@ export default async function PortalDashboardPage() {
       description: app.job.description,
       requirements: app.job.requirements,
       deadline: app.job.deadline ? app.job.deadline.toISOString() : null,
-      tests: app.job.tests.map(t => ({
+      tests: (app.job.tests || []).map((t: any) => ({
         id: t.id,
         title: t.title,
         durationMinutes: t.durationMinutes,

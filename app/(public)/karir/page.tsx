@@ -17,6 +17,19 @@ import {
 import { Button } from '@/components/ui/button'
 import { JOB_VACANCIES } from '@/lib/data/kkusb-data'
 
+interface CareerJobItem {
+  id: string
+  title: string
+  slug: string
+  department: string
+  location: string
+  type: string
+  postedDate: string
+  deadline: string
+  description: string
+  requirements: string[]
+}
+
 export const metadata: Metadata = {
   title: 'Karir & Rekrutmen — Bergabung Bersama KKUSB',
   description: 'Informasi lowongan kerja resmi, budaya kerja, dan proses rekrutmen di Koperasi Jasa Karyawan Usaha Sejahtera Bersama.',
@@ -37,8 +50,8 @@ export default async function KarirPage() {
   }
 
   // Gunakan data dari database jika tersedia, atau fallback ke JOB_VACANCIES
-  const jobs = dbJobs.length > 0 
-    ? dbJobs.map(dbJ => ({
+  const jobs: CareerJobItem[] = dbJobs.length > 0 
+    ? dbJobs.map((dbJ: any) => ({
         id: dbJ.id,
         title: dbJ.title,
         slug: dbJ.slug,
@@ -50,7 +63,7 @@ export default async function KarirPage() {
         description: dbJ.description,
         requirements: dbJ.requirements ? dbJ.requirements.split('\n').map((r: string) => r.replace(/^-\s*/, '').trim()).filter(Boolean) : []
       }))
-    : JOB_VACANCIES.map(j => ({
+    : JOB_VACANCIES.map((j: any) => ({
         id: j.id,
         title: j.title,
         slug: j.slug,
@@ -218,7 +231,7 @@ export default async function KarirPage() {
                   <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800">
                     <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Kualifikasi Utama:</h4>
                     <ul className="grid sm:grid-cols-2 gap-2 text-xs text-zinc-600 dark:text-zinc-400">
-                      {job.requirements.slice(0, 4).map((req, rIdx) => (
+                      {job.requirements.slice(0, 4).map((req: string, rIdx: number) => (
                         <li key={rIdx} className="flex items-start gap-2">
                           <CheckCircle2 className="h-3.5 w-3.5 text-[#079B49] shrink-0 mt-0.5" />
                           <span className="line-clamp-1">{req}</span>

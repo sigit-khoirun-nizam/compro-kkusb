@@ -59,12 +59,12 @@ export default async function PortalLowonganPage() {
   }
 
   // Format data HANYA dari database tanpa dummy fallback
-  const jobs: PortalJobItem[] = dbJobs.map(dbJ => {
-    const applied = userApplications.find(a => a.jobId === dbJ.id || a.job?.id === dbJ.id || a.job?.slug === dbJ.slug)
+  const jobs: PortalJobItem[] = dbJobs.map((dbJ: any) => {
+    const applied = userApplications.find((a: any) => a.jobId === dbJ.id || a.job?.id === dbJ.id || a.job?.slug === dbJ.slug)
     
     // Requirements split by newline
-    const requirementsList = dbJ.requirements 
-      ? dbJ.requirements.split('\n').map(r => r.replace(/^-\s*/, '').trim()).filter(Boolean)
+    const requirementsList: string[] = dbJ.requirements 
+      ? dbJ.requirements.split('\n').map((r: string) => r.replace(/^-\s*/, '').trim()).filter(Boolean)
       : []
 
     return {
