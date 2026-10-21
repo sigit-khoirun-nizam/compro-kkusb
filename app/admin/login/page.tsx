@@ -84,21 +84,22 @@ function AdminLoginForm() {
         password,
       })
 
-      if (result?.error) {
+      if (!result || result.error || !result.ok) {
         setAlertType('auth_error')
-        if (result.error.includes('Email') || result.error.includes('terdaftar')) {
+        const errMessage = result?.error || ''
+        if (errMessage.includes('Email') || errMessage.includes('terdaftar')) {
           setFieldErrors({ email: 'Email administrator tidak terdaftar.' })
           setError('Email administrator tidak ditemukan dalam sistem.')
-        } else if (result.error.includes('Password') || result.error.includes('salah')) {
+        } else if (errMessage.includes('Password') || errMessage.includes('salah')) {
           setFieldErrors({ password: 'Kata sandi tidak sesuai.' })
           setError('Kata sandi administrator tidak sesuai. Harap periksa kembali.')
         } else {
-          setError(result.error)
+          setError('Email atau kata sandi administrator tidak sesuai. Silakan periksa kembali.')
         }
         setLoading(false)
       } else {
-        router.push('/admin')
-        router.refresh()
+        const dest = searchParams.get('callbackUrl') || '/admin'
+        window.location.href = dest
       }
     } catch {
       setAlertType('auth_error')

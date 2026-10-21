@@ -162,8 +162,7 @@ export default function PortalPelamarLoginClient({
         toast.success('Berhasil masuk!', {
           description: 'Mengarahkan ke Dashboard Pelamar...'
         })
-        router.push(callbackUrl || '/portal-pelamar/dashboard')
-        router.refresh()
+        window.location.href = callbackUrl || '/portal-pelamar/dashboard'
       }
     } catch {
       setAlertState({

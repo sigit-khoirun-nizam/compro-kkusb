@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 import prisma from './prisma'
 
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET || 'supersecret123',
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
