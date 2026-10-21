@@ -1,1 +1,21 @@
-# No errors
+npx prisma db seed
+Environment variables loaded from .env
+Running seed command `npx tsx prisma/seed.ts` ...
+PrismaClientKnownRequestError:
+Invalid `prisma.user.findUnique()` invocation in
+/var/www/compro-kkusb/prisma/seed.ts:8:43
+
+  5
+  6 async function main() {
+  7   // Check if admin already exists
+→ 8   const existingAdmin = await prisma.user.findUnique(
+The table `User` does not exist in the current database.
+    at $n.handleRequestError (/var/www/compro-kkusb/node_modules/@prisma/client/runtime/library.js:121:7315)
+    at $n.handleAndLogRequestError (/var/www/compro-kkusb/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/var/www/compro-kkusb/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at async l (/var/www/compro-kkusb/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at async main (/var/www/compro-kkusb/prisma/seed.ts:8:25) {
+  code: 'P2021',
+  clientVersion: '5.22.0',
+  meta: { modelName: 'User', table: 'User' }
+}

@@ -6,6 +6,7 @@ import prisma from './prisma'
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || 'supersecret123',
+  useSecureCookies: process.env.NEXTAUTH_URL?.startsWith('https://') ?? false,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
